@@ -1,0 +1,142 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>admin</title>
+    <div class="bg-dark">
+        <div class="container bg-dark">
+            <div class="row">
+                <div class="col-md-10">
+                    <h5 class="m-2 text-light" th:inline="text">Hello Admin with name: [[${#httpServletRequest.remoteUser}]]</h5>
+                </div>
+                <div class="col-md-2" style="">
+                    <a class="btn btn-dark btn-block w-5 btn-lg active justify-content-end flex-row"
+                       href="/logout" style="">LOG OUT</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</head>
+
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-2 sidebar">
+            <h4><a href="/admin/user/" sec:authorize="hasRole('ROLE_USER')">User</a></h4>
+            <h4><a href="#">ADMIN</a></h4>
+        </div>
+        <div class="col-10">
+            <div class="row">
+                <div class="container">
+                    <h2>Admin Panel</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="container">
+                    <button type="button" class="btn btn-outline-secondary">Users Table</button>
+                    <a class="btn btn-outline-primary" href="/admin/add" role="button">New User</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="container">
+                        <div class="card">
+                            <div class="card-block">
+                                <table id="table" class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>id</th>
+                                        <th>username</th>
+                                        <th>age</th>
+                                        <th>role</th>
+                                        <th>EDIT</th>
+                                        <th>DELETE</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="user :${users}">
+                                        <td th:text=" ${user.id}"></td>
+                                        <td th:text=" ${user.username}"></td>
+                                        <td th:text=" ${user.age}"></td>
+                                        <td th:text=" ${user.roles}"></td>
+                                        <td >
+                                            <a class="btn btn-info"
+                                               href="#" data-toggle="modal" th:data-target="'#ed' + ${user.id}" style="">EDIT</a>
+                                        </td>
+                                        <td>
+                                            <a th:href="@{/admin/delete/{id}(id=${user.id})}" class="btn btn-danger">DELETE</a>
+                                        </td>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="modal fade" th:each="user : ${users}"  th:id="${'ed' + user.id}" tabindex="-1" role="dialog"
+                             aria-labelledby="exampleModalLabel"
+                             aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">EDIT</h5>
+                                        <button type="button" class="close btn btn-danger" data-dismiss="modal"
+                                                aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <form th:action="@{/admin/edit}" method="post" th:object="${user}">
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <label for="id" th:hidden="id" class="col-form-label">ID</label>
+                                                <input type="text" th:hidden="id" class="form-control" id="id" name="id"
+                                                       th:value="${user.id}"/>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="username" class="col-form-label">username:</label>
+                                                <input type="text" class="form-control" id="username" name="username"
+                                                       th:value="${user.username}"/>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="age" class="col-form-label">age:</label>
+                                                <input type="number" class="form-control" id="age" name="age"
+                                                       th:value="${user.age}"/>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="password" class="col-form-label">password:</label>
+                                                <input type="text" class="form-control" id="password" name="password"
+                                                       value=""/>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>-->
+                                                    <select class="custom-select" multiple id="roles3" name="roles3">
+                                                        <option value="ADMIN">ADMIN</option>
+                                                        <option value="USER">USER</option>
+                                                    </select>
+                                                </label>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
+                                                </button>
+                                                <input type="submit" class="btn btn-primary" value="edit"/>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"
+        style=""></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"
+        style=""></script>
+</body>
+</html>

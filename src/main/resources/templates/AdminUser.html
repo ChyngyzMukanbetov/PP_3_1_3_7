@@ -1,0 +1,73 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>admin</title>
+    <div class="bg-dark">
+        <div class="container bg-dark">
+            <div class="row">
+                <div class="col-md-10">
+                    <h5 class="m-2 text-light" th:inline="text">Hello user with name: [[${#httpServletRequest.remoteUser}]]</h5>
+                </div>
+                <div class="col-md-2" style="">
+                    <a class="btn btn-dark btn-block w-5 btn-lg active justify-content-end flex-row"
+                       href="/logout" style="">LOG OUT</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</head>
+
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-2 sidebar">
+            <h4><a href="#">User</a></h4>
+            <h4><a href="/admin">ADMIN</a></h4>
+        </div>
+        <div class="col-10">
+            <div class="row">
+                <div class="container">
+                    <h2>Admin Panel</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="container">
+                    <div class="card">
+                        <div class="card-block">
+                            <table id="table" class="table table-striped">
+                                <tr>
+                                    <th>id</th>
+                                    <th>username</th>
+                                    <th>age</th>
+                                    <th>role</th>
+                                </tr>
+                                <tr th:object="${user}">
+                                    <td th:text="${user.id}"></td>
+                                    <td th:text="${user.username}"></td>
+                                    <td th:text="${user.age}"></td>
+                                    <td th:text="${user.roles}">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"
+        style=""></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"
+        style=""></script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>admin</title>
+    <div class="bg-dark">
+        <div class="container bg-dark">
+            <div class="row">
+                <div class="col-md-10">
+                    <h5 class="m-2 text-light" th:inline="text">Hello user with name: [[${#httpServletRequest.remoteUser}]]</h5>
+                </div>
+                <div class="col-md-2" style="">
+                    <a class="btn btn-dark btn-block w-5 btn-lg active justify-content-end flex-row"
+                       href="/logout" style="">LOG OUT</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</head>
+
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-2 sidebar">
+            <h4><a href="/user/" sec:authorize="hasRole('ROLE_USER')">User</a></h4>
+            <h4><a href="#">ADMIN</a></h4>
+        </div>
+        <div class="col-10">
+            <div class="row">
+                <div class="container">
+                    <h2>Admin Panel</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="container">
+                    <a class="btn btn-outline-primary" href="/admin" role="button">Users Table</a>
+                    <button type="button" class="btn btn-outline-secondary">New User</button>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="container">
+                    <div class="card">
+                        <div class="card-block">
+                            <form th:action="@{/admin/add}" method="post">
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label for="username" class="col-form-label">username:</label>
+                                        <input type="text" class="form-control" id="username" name="username" value=""/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="age" class="col-form-label">age:</label>
+                                        <input type="number" class="form-control" id="age" name="age" value=""/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="password" class="col-form-label">password:</label>
+                                        <input type="text" class="form-control" id="password" name="password" value=""/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>-->
+                                            <select class="custom-select" multiple id="roles2" name="roles2">
+                                                <option value="ADMIN">ADMIN</option>
+                                                <option value="USER">USER</option>
+                                            </select>
+                                        </label>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <input type="submit" class="btn btn-primary" value="Add"/>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--<div>-->
+<!--    <a class=" btn btn-lg btn-dark btn-block  active flex-grow-0 d-flex align-items-end justify-content-ctr flex-row"-->
+<!--       href="#" data-toggle="modal" data-target="#modal-add" th:attr="data-target='#modal-add'" style="">ADD</a>-->
+<!--    <div class="modal modal-warning fade in" th:id="modal-add">-->
+<!--        <form method="post" th:action="@{/admin/add}">-->
+<!--            <div class="modal-dialog">-->
+<!--                <div class="modal-content">-->
+<!--                    <div class="modal-header">-->
+<!--                        <h5 class="modal-title">add User</h5>-->
+<!--                        <button type="button" class="close btn btn-danger" data-dismiss="modal" aria-label="Close">-->
+<!--                            <span aria-hidden="true">×</span></button>-->
+
+<!--                    </div>-->
+<!--                    <div class="modal-body">-->
+
+<!--                        <label>-->
+<!--                            <input class="form-control" type="text" name="username" placeholder="username">-->
+<!--                        </label>-->
+<!--                        <label>-->
+<!--                            <input class="form-control" type="text" name="password" placeholder="password">-->
+<!--                        </label>-->
+<!--                        <label>-->
+<!--                            <input class="form-control" type="number" name="age" placeholder="age">-->
+<!--                        </label>-->
+<!--                        <label for="roles2"><select id="roles2" name="roles2" class="form-control">-->
+<!--                            <option selected th:value="'ADMIN'" th:text="ADMIN"></option>-->
+<!--                            <option th:value="'USER'" th:text="USER"></option>-->
+<!--                        </select></label>-->
+
+
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </form>-->
+<!--    </div>-->
+<!--</div>-->
+
+<script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"
+        style=""></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"
+        style=""></script>
+</body>
+</html>
